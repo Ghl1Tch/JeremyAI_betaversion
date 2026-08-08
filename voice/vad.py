@@ -10,25 +10,44 @@ class SileroVAD:
         self.model = load_silero_vad()
 
         self.sample_rate = 16000
+        self.chunk_size = 512
 
     def is_speech(self, audio):
         """
         Check whether the current audio chunk contains speech.
 
-        Silero expects a torch tensor with 16 kHz audio.
+        Silero VAD expects 512 samples at 16 kHz,
+        so longer audio is split into smaller chunks.
         """
 
         if len(audio) == 0:
             return False
 
-        audio_tensor = torch.from_numpy(audio)
+        audio_tensor = torch.from_numpy(audio).float()
 
         if audio_tensor.dim() > 1:
             audio_tensor = audio_tensor.squeeze()
 
-        probability = self.model(
-            audio_tensor,
-            self.sample_rate,
-        )
+        # Split the audio into chunks Silero can process.
+        chunks = torch.split(audio_tensor, self.chunk_size)
 
-        return float(probability) >= self.threshold
+        probabilities = []
+
+        for chunk in chunks:
+            # Ignore the last incomplete chunk.
+            if chunk.shape[-1] != self.chunk_size:
+                continue
+
+            probability = self.model(
+                chunk,
+                self.sample_rate,
+            )
+
+            probabilities.append(float(probability))
+
+        if not probabilities:
+            return False
+
+        # If any part of the audio contains speech,
+        # consider the whole audio chunk as speech.
+        return max(probabilities) >= self.threshold

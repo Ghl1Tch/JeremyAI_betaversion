@@ -1,12 +1,21 @@
 {
     "wake_words": [
-        "jeremy",
-        "jermy",
-        "jaramy"
+        "джереми",
+        "джейреми",
+        "джейлеми",
+        "джерими",
+        "джейрими",
+        "джерри",
+        "джейлими",
+        "джей",
+        "тупой",
+        "проснись",
+        "ало",
+        "привет"
     ],
 
     "ollama_url": "http://127.0.0.1:11434/api/chat",
-    "ollama_model": "qwen2.5:7b",
+    "ollama_model": "qwen2.5:3b",
 
     "whisper_model": "base",
     "whisper_language": "ru",
@@ -20,7 +29,7 @@
 
     "memory_file": "memory/memory.json",
 
-    "piper_executable": "piper/piper.exe",
-    "piper_model": "piper/voice.onnx",
-    "piper_config": "piper/voice.onnx.json"
+    "piper_model": "piper/ru/ru_RU/denis/medium/ru_RU-denis-medium.onnx",
+    "piper_config": "piper/ru/ru_RU/denis/medium/ru_RU-denis-medium.onnx.json",
+    "piper_executable": ""
 }

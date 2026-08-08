@@ -1,68 +1,41 @@
 import subprocess
+import sys
 from pathlib import Path
-
-
 class Speaker:
     def __init__(self, settings):
-        self.executable = Path(
-            settings["piper_executable"]
-        )
-
-        self.model = Path(
-            settings["piper_model"]
-        )
-
-        self.config = Path(
-            settings["piper_config"]
-        )
-
+        self.model = Path(settings["piper_model"])
+        self.config = Path(settings["piper_config"])
         self.output = (
-            self.executable.parent
-            / "jeremy_output.wav"
+            self.model.parent / "jeremy_output.wav"
         )
-
     def say(self, text):
-        if not self.executable.exists():
-            print(
-                f"Piper not found: {self.executable}"
-            )
-            return
-
         if not self.model.exists():
-            print(
-                f"Piper voice not found: {self.model}"
-            )
+            print(f"Piper voice not found: {self.model}")
             return
-
         command = [
-            str(self.executable),
-            "--model",
+            sys.executable,
+            "-m",
+            "piper",
+            "-m",
             str(self.model),
-            "--output_file",
+            "-f",
             str(self.output),
         ]
-
         if self.config.exists():
-            command.extend(
-                [
-                    "--config",
-                    str(self.config),
-                ]
-            )
-
+            command.extend([
+                "-c",
+                str(self.config),
+            ])
         result = subprocess.run(
             command,
             input=text,
             text=True,
             capture_output=True,
         )
-
         if result.returncode != 0:
             print("Piper error:")
             print(result.stderr)
             return
-
-        # Play the generated voice on Windows.
         subprocess.run(
             [
                 "powershell",
