@@ -1,0 +1,26 @@
+{
+    "wake_words": [
+        "jeremy",
+        "jermy",
+        "jaramy"
+    ],
+
+    "ollama_url": "http://127.0.0.1:11434/api/chat",
+    "ollama_model": "qwen2.5:7b",
+
+    "whisper_model": "base",
+    "whisper_language": "ru",
+
+    "sample_rate": 16000,
+    "channels": 1,
+
+    "vad_threshold": 0.5,
+    "silence_duration": 0.8,
+    "max_record_seconds": 15,
+
+    "memory_file": "memory/memory.json",
+
+    "piper_executable": "piper/piper.exe",
+    "piper_model": "piper/voice.onnx",
+    "piper_config": "piper/voice.onnx.json"
+}
