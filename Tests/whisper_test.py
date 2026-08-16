@@ -2,13 +2,13 @@ from faster_whisper import WhisperModel
 import sounddevice as sd
 import numpy  as np
 device = 1
-print("Загрузка Whisper...")
+print("Downloading Whisper...")
 model = WhisperModel(
     "small",
     device="cpu",
     compute_type="int8"
 )
-print("Говори что нибудь...")
+print("Say anything for 5 seconds...")
 audio = sd.rec(
     int(5*16000),
     samplerate=16000,
@@ -21,6 +21,7 @@ segments, info = model.transcribe(
     audio,
     language="ru"
 )
-print("Ты сказал:")
+print("You said:")
 for segment in segments:
     print(segment.text)
+#Test for Whisper

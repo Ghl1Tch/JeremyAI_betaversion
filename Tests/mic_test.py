@@ -3,7 +3,7 @@ import numpy as np
 
 device = 1
 
-print("Говори что-нибудь 5 секунд...")
+print("Say anything for 5 seconds...")
 
 recording = sd.rec(
     int(5 * 16000),
@@ -16,10 +16,11 @@ sd.wait()
 
 volume = np.max(np.abs(recording))
 
-print("Громкость:", volume)
+print("Volume:", volume)
 
 if volume > 0.01:
-    print("Микрофон работает")
+    print("Mic worked")
 else:
-    print("Микрофон не работает")
-    
+    print("Mic not worked")
+
+#This test for mic
