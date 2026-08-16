@@ -22,7 +22,7 @@ class Listener:
             threshold=settings["vad_threshold"]
         )
 
-    def wait_for_speech(self):
+    def wait_for_speech(self, timeout=None):
         print("Listening...")
 
         chunk_time = 0.1
@@ -36,6 +36,7 @@ class Listener:
         silence = 0.0
 
         started = time.monotonic()
+        wait_started = time.monotonic()
 
         with sd.InputStream(
             samplerate=self.sample_rate,
@@ -65,6 +66,13 @@ class Listener:
 
                     if silence >= self.silence_duration:
                         break
+
+                if (
+                    timeout is not None
+                    and not speaking
+                    and time.monotonic() - wait_started >= timeout
+                ):
+                    break
 
                 if (
                     time.monotonic() - started
