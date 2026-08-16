@@ -1,7 +1,7 @@
 from core.brain import Brain
 from core.config_loader import load_settings
 from core.memory import Memory
-
+from core.text_normalizer import TextNormalizer
 from voice.listener import Listener
 from voice.speaker import Speaker
 from voice.whisper import WhisperTranscriber
@@ -12,9 +12,9 @@ def main():
 
     memory = Memory(settings["memory_file"])
     brain = Brain(settings, memory)
-
     listener = Listener(settings)
     transcriber = WhisperTranscriber(settings)
+    normalizer = TextNormalizer()
     speaker = Speaker(settings)
 
     print("Jeremy AI Beta 1.0")
@@ -32,7 +32,7 @@ def main():
 
             if not text:
                 continue
-
+            text = normalizer.normalize(text)
             print(f"You: {text}")
 
             if not brain.is_wake_command(text):

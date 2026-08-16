@@ -1,4 +1,4 @@
-from text_normalizer import TextNormalizer
+from core.text_normalizer import TextNormalizer
 
 
 normalizer = TextNormalizer()
