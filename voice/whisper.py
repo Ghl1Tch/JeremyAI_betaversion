@@ -16,6 +16,11 @@ class WhisperTranscriber:
             audio_file,
             language=self.language,
             vad_filter=True,
+            vad_parameters={"min_silence_duration_ms": 500},
+            beam_size=5,
+            condition_on_previous_text=True,#context
+            temperature=0,
+            no_speech_threshold=0.6
         )
 
         return " ".join(

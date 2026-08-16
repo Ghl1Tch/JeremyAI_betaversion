@@ -23,7 +23,7 @@
     "ollama_url": "http://127.0.0.1:11434/api/chat",
     "ollama_model": "qwen2.5:3b",
 
-    "whisper_model": "base",
+    "whisper_model": "small",
     "whisper_language": "ru",
 
     "sample_rate": 16000,
